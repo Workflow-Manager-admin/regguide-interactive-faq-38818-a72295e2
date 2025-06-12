@@ -1,0 +1,73 @@
+<div class="faq-main-container">
+  <!-- Progress Indicator -->
+  <div class="progress-indicator" aria-label="Progress">
+    <div *ngFor="let step of steps; let i = index" class="progress-step" [class.active]="i+1 === currentStep" [class.done]="step.done">
+      <span class="step-dot"></span>
+      <span class="step-label">{{step.label}}</span>
+      <span class="connector" *ngIf="i+1 < steps.length"></span>
+    </div>
+  </div>
+
+  <!-- Welcoming Prompt -->
+  <section class="faq-welcome" *ngIf="currentStep === 1">
+    <h1 class="welcome-title">{{welcomeTitle}}</h1>
+    <p class="welcome-subtitle">{{welcomeSubtitle}}</p>
+  </section>
+
+  <!-- Central Question Card -->
+  <div class="faq-question-card" *ngIf="currentStep === 1">
+    <div class="card-content">
+      <h2>{{questionText}}</h2>
+      <!-- Placeholder for options/buttons; replace with dynamic form later -->
+      <div class="question-options">
+        <button class="option-btn" (click)="nextStep()">Company</button>
+        <button class="option-btn" (click)="nextStep()">Sole Proprietor</button>
+        <button class="option-btn" (click)="nextStep()">Partnership</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder for Dynamic FAQ Content, Document Checklist, Summary -->
+  <div *ngIf="currentStep === 2" class="faq-body-steps">
+    <div class="faq-section faq-dynamic-content">
+      <h3><span class="section-icon">💡</span> FAQs</h3>
+      <div class="faq-content-placeholder">
+        <!-- Dynamic FAQ content to be loaded here based on answers -->
+        <div class="faq-placeholder-item">
+          <strong>Question:</strong> How do I register a company?<br>
+          <span class="faq-disclosure collapsed">[Details will be interactive]</span>
+        </div>
+      </div>
+    </div>
+    <div class="faq-section faq-docs-checklist">
+      <h3><span class="section-icon">📋</span> Checklist of Required Documents</h3>
+      <ul class="checklist-list">
+        <li class="checklist-item"><span class="doc-icon">🗂️</span>ID Proof (e.g. NRIC/Passport)</li>
+        <li class="checklist-item"><span class="doc-icon">📄</span>Business Address Proof</li>
+      </ul>
+    </div>
+    <div class="faq-nextstep">
+      <button class="nextstep-btn" (click)="nextStep()">Show Summary</button>
+    </div>
+  </div>
+
+  <!-- Summary Panel -->
+  <div *ngIf="summaryReady" class="faq-summary-panel">
+    <h2><span class="section-icon">✅</span> Registration Overview &amp; What You'll Receive</h2>
+    <div class="summary-content">
+      <div class="issued-documents">
+        <strong>Issued Documents:</strong>
+        <ul>
+          <li><span class="issued-doc-icon">🔖</span> Business Registration Certificate (valid 1 year)</li>
+          <li><span class="issued-doc-icon">💼</span> Company Profile/Extract (downloadable PDF)</li>
+        </ul>
+      </div>
+      <div class="cost-summary">
+        <strong>Total Government Fees:</strong> <span class="cost-amt">$150</span>
+      </div>
+    </div>
+    <div class="faq-restart">
+      <button class="restart-btn" (click)="currentStep=1;summaryReady=false;steps=[{label:'Start',done:true},{label:'Questions',done:false},{label:'Summary',done:false}]">Restart FAQ</button>
+    </div>
+  </div>
+</div>
